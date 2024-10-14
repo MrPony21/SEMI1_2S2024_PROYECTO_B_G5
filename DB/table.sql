@@ -14,7 +14,8 @@
         travel_name VARCHAR(255) NOT NULL,
         travel_description TEXT NOT NULL,
         travel_cost INT NOT NULL,
-        travel_image_link VARCHAR(500)
+        travel_image_link VARCHAR(500),
+        travel_review FLOAT DEFAULT 0.0
     );
 
     CREATE TABLE IF NOT EXISTS Label(
@@ -38,3 +39,20 @@
         ON DELETE CASCADE
         ON UPDATE CASCADE
     );
+
+    CREATE TABLE IF NOT EXISTS Review(
+        review_id SERIAL PRIMARY KEY,
+        review_description TEXT NOT NULL,
+        review_score INT NOT NULL,
+        review_user_id BIGINT UNSIGNED,
+        review_travel_id BIGINT UNSIGNED,
+
+        CONSTRAINT fk_review_user_id FOREIGN KEY (review_user_id) REFERENCES User(user_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+
+        CONSTRAINT fk_review_travel_id FOREIGN KEY (review_travel_id) REFERENCES Travel(travel_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+    );
+    
