@@ -27,7 +27,7 @@ function NavBar({ user }) {
                             <h2>{user.name}</h2>
                             <p>Saldo: Q {user.saldo} </p>
                         </div>
-                        <div className="add-funds" >
+                        <div className="add-funds" onClick={() => navigate("/addFunds")}>
                             <AddCircleOutlineOutlinedIcon fontSize="medium" color="primary"/>
                         </div>
                     </div>

@@ -1,0 +1,96 @@
+.form-pay {
+    background: #f2f2f2;;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    position: relative;
+    border-radius: 25px;
+    margin: auto;
+    margin-top: 2rem;
+  }
+  .form-pay .label {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    height: -moz-fit-content;
+    height: fit-content;
+  }
+  .form-pay .label:has(input:focus) .title {
+    top: 0;
+    left: 0;
+    color: #d17842;
+  }
+  .form-pay .label .title {
+    padding: 0 10px;
+    transition: all 300ms;
+    font-size: 12px;
+    color: #8b8e98;
+    font-weight: 600;
+    width: -moz-fit-content;
+    width: fit-content;
+    top: 14px;
+    position: relative;
+    left: 15px;
+    background:#f2f2f2;;
+  }
+  .form-pay .input-field {
+    width: auto;
+    height: 50px;
+    text-indent: 15px;
+    border-radius: 15px;
+    outline: none;
+    background-color: transparent;
+    border: 1px solid #21262e;
+    transition: all 0.3s;
+    caret-color: #d17842;
+    color: #000000;
+  }
+  
+  .form-pay .input-field:hover {
+    border-color: rgba(209, 121, 66, 0.5);
+  }
+  
+  .form-pay .input-field:focus {
+    border-color: #d17842;
+  }
+  .form-pay .split {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    gap: 15px;
+  }
+  .form-pay .split label {
+    width: 160px;
+  }
+  .form-pay .checkout-btn {
+    margin-top: 20px;
+    padding: 20px 0;
+    border-radius: 25px;
+    font-weight: 700;
+    transition: all 0.3s cubic-bezier(0.15, 0.83, 0.66, 1);
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    border: none;
+    justify-content: center;
+    fill: #fff;
+    color: #fff;
+    border: 2px solid transparent;
+    background: #d17842;
+    transition: all 200ms;
+  }
+  .form-pay .checkout-btn:active {
+    scale: 0.95;
+  }
+  
+  .form-pay .checkout-btn:hover {
+    color: #d17842;
+    border: 2px solid #d17842;
+    background: transparent;
+  }
+
