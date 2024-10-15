@@ -1,0 +1,74 @@
+.navbar{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ffffff
+}
+
+.imagen {
+    cursor: pointer;
+}
+
+.Button-sign-in{
+    padding-right: 20px;
+}
+
+
+.center-div {
+    display: flex;
+    align-items: center; /* Alinea verticalmente al centro */
+    justify-content: flex-start; /* Alínea al inicio (izquierda) */
+    text-align: left; /* Alinea el texto a la izquierda */
+}
+
+/* Contenedor para el nombre y saldo, al lado derecho */
+.user-info {
+    margin-left: 40px; /* Agrega un margen entre AvatarUser y el texto */
+}
+
+.center-div h2 {
+    margin: 0; /* Elimina el margen predeterminado del h2 */
+    color: #000;
+}
+
+.center-div p {
+    margin: 5px 0; /* Agrega un margen ligero entre el nombre y el saldo */
+    color: #000;
+
+}
+
+.add-funds{
+    cursor: pointer;
+    margin-left: 5px;
+    
+}
+
+
+
+
+@media (max-width: 768px) {
+
+    .center-div {
+        justify-content: space-between;
+        padding-right: 35px;
+        font-size: medium;
+    }
+
+    .center-div h2 {
+        font-size: medium;
+    }
+    
+    
+    .center-div p {
+        font-size: x-small;
+    }
+
+    /* Contenedor para el nombre y saldo, al lado derecho */
+    .user-info {
+       margin-left: 10px;
+    }
+
+   
+
+    }

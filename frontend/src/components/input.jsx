@@ -1,4 +1,5 @@
 import React, {forwardRef} from "react";
+import "./input.css"
 
 function Input( {value, placeholder, onChange , name, type, required }){
 
