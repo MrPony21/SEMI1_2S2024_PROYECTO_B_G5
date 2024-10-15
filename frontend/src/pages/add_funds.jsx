@@ -33,7 +33,7 @@ const Add_funds = () => {
                             type="text"
                             name="input-name"
                             title="Input title"
-                            placeholder="Enter your full name"
+                            placeholder="Ingresa el nombre de la tarjeta"
                         />
                     </label>
                     <label for="serialCardNumber" class="label">
@@ -81,6 +81,19 @@ const Add_funds = () => {
                                 name="input-name"
                                 title="funds"
                                 placeholder="Q"
+                            />
+                        </label>
+                    </div>
+                    <div class="serialCardNumber">
+                        <label for="ExDate" class="label">
+                            <span class="title">Contraseña</span>
+                            <input
+                                id="ExDate"
+                                class="input-field"
+                                type="text"
+                                name="input-name"
+                                title="funds"
+                                placeholder="Ingrese contraseña"
                             />
                         </label>
                     </div>
