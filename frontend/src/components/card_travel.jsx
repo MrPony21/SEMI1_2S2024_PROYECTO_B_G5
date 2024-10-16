@@ -1,7 +1,21 @@
 import React from "react";
 import "./card_travel.css"
+import StarRateIcon from '@mui/icons-material/StarRate';
+import { FaStar } from "react-icons/fa6";
+import { Navigate, useNavigate } from "react-router-dom";
 
-const Card_travel = ( { title, description ,src }) => {
+//se planea manejar con id el travel
+const Card_travel = ({ id ,title, description, src }) => {
+    const navigate = useNavigate()
+
+    const navigate_to_travel = () => {
+
+        localStorage.setItem("travel", title)
+        localStorage.setItem("travel_imagen", src)
+
+        navigate("/Travel")
+
+    }
 
     return (
 
@@ -10,6 +24,24 @@ const Card_travel = ( { title, description ,src }) => {
             <div class="card__content">
                 <p class="card__title">{title}</p>
                 <p class="card__description">{description}</p>
+                <div className="div-button">
+                    <>
+                        <div className="div-rate-price">
+                            <p className='p-rate' >5</p>
+                            <FaStar className="star-rate" />
+                        </div>
+                        <div className="div-price">
+                            <h3 className="price" >Q800</h3>
+                        </div>
+                        <div>
+                            <button onClick={navigate_to_travel}>
+                                <span class="transition"></span>
+                                <span class="gradient"></span>
+                                <span class="label">Reservar</span>
+                            </button>
+                        </div>
+                    </>
+                </div>
             </div>
         </div>
 
