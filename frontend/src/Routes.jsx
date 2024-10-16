@@ -4,6 +4,7 @@ import Login from "./pages/login"
 import Register from "./pages/register";
 import Home from "./pages/home";
 import Add_funds from "./pages/add_funds";
+import Travel from "./pages/travel";
 
 const Routes = createBrowserRouter([
     {
@@ -22,6 +23,10 @@ const Routes = createBrowserRouter([
     {
         path: "/addFunds",
         element: <Add_funds/>
+    },
+    {
+        path: "/travel",
+        element: <Travel/>
     }
 
 
