@@ -1,0 +1,76 @@
+.comment-container {
+    height: 5%;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color:  #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.25);
+  }
+  
+  @media (max-width: 600px) {
+    .comment-container {
+      width: 90%;
+    }
+  }
+  
+  .comment-container-header {
+      margin-top: 6px;
+    padding: 16px 32px;
+    border-bottom: 1px solid #5c595980;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .comment-container-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    line-height: 1;
+    font-weight: 700;
+    font-size: 1.125;
+    color: #242424;
+  }
+  
+  
+  .comment-container-body {
+    padding: 10px 35px 20px;
+    overflow-y: auto;
+    color: #242424;
+    height: 6rem;
+  }
+
+  
+  
+.comment-container-footer {
+    padding: 15px ;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    border-top: 1px solid #ddd;
+    gap: 15px;
+    position: relative;
+  }
+  
+  .comment-container-footer .button {
+    padding: 12px 20px;
+    border-radius: 8px;
+    background-color: transparent;
+    border: 0;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.15s ease;
+  }
+  
+  .button.is-ghost:hover, .button.is-ghost:focus {
+    background-color: #dfdad7;
+  }
+  
+  .button.is-primary {
+    background-color: #101010;
+    color: #fff;
+  }
