@@ -20,7 +20,7 @@ BEGIN
         p_travel_cost,
         p_travel_image_link
     );
-    
+    SELECT 1;
 END //
 
 DELIMITER ;

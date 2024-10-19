@@ -11,11 +11,13 @@
     CREATE TABLE IF NOT EXISTS Travel(
 
         travel_id SERIAL PRIMARY KEY,
-        travel_name VARCHAR(255) NOT NULL,
+        travel_name VARCHAR(255) UNIQUE NOT NULL,
         travel_description TEXT NOT NULL,
         travel_cost INT NOT NULL,
         travel_image_link VARCHAR(500),
-        travel_review FLOAT DEFAULT 0.0
+        travel_review FLOAT DEFAULT 0.0,
+        travel_axis_x FLOAT DEFAULT 0.0,
+        travel_axis_y FLOAT DEFAULT 0.0
     );
 
     CREATE TABLE IF NOT EXISTS Label(
