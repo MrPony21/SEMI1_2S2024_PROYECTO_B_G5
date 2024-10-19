@@ -22,12 +22,13 @@ CALL user_update(3, NULL, NULL, '12345', NULL, NULL);
 CALL user_update(4, NULL, NULL, NULL, 150, NULL);
 CALL user_update(1, NULL, NULL, NULL, NULL, 'https://www.google2.com');
 
-CALL user_delete(3);
+CALL user_delete(17);
 
 SELECT * FROM User;
 
 -- Procedimiento para insertar un viaje:
 -- parametros: travel_name, travel_description, travel_cost, travel_image_link
+-- YA ESTA
 CALL travel_insert('Tecpan', 'Viaje a tecpan con amigos', 100, 'https://www.google.com');
 CALL travel_insert('Antigua', 'Viaje a antigua con amigos', 200, 'https://www.google.com');
 CALL travel_insert('Atitlan', 'Viaje a atitlan con amigos', 300, 'https://www.google.com');
@@ -42,6 +43,7 @@ CALL travel_get_travel_by_id(3);
 
 
 -- Procedimiento para obtener todos los viajes:
+-- YA ESTA
 CALL travel_get_all();
 
 -- Procedimiento para insertar una review:
