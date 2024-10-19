@@ -15,6 +15,11 @@ const Comments = () => {
 
     };
 
+    const TraducirComentario = () => {
+        console.log(idioma)
+
+    }
+
     return (
         <>
             <div class="comment">
@@ -22,7 +27,7 @@ const Comments = () => {
                     <header class="comment-container-header">
                         <span class="comment-container-title">
                             Nombre
-                            <RatingComponent readonly={false}></RatingComponent>
+                            <RatingComponent readonly={true} val={4}></RatingComponent>
                         </span>
                     </header>
                     <section class="comment-container-body rtf">
@@ -43,7 +48,7 @@ const Comments = () => {
                                 <MenuItem value="japones">Japones</MenuItem>
                             </Select>
                         </FormControl>
-                        <button class="button is-primary" >Traducir</button>
+                        <button class="button is-primary" onClick={TraducirComentario} >Traducir</button>
                         <button class="button is-primary">Oir</button>
                     </footer>
                 </article>

@@ -5,6 +5,8 @@ import Register from "./pages/register";
 import Home from "./pages/home";
 import Add_funds from "./pages/add_funds";
 import Travel from "./pages/travel";
+import Reservar from "./pages/reservar";
+import Upload_Travel from "./pages/upload_travel";
 
 const Routes = createBrowserRouter([
     {
@@ -27,6 +29,14 @@ const Routes = createBrowserRouter([
     {
         path: "/travel",
         element: <Travel/>
+    },
+    {
+        path: "/reservar",
+        element: <Reservar/>
+    },
+    {
+        path: "/uploadTravel",
+        element: <Upload_Travel/>
     }
 
 
