@@ -63,6 +63,29 @@ async function editUser(user_id, newUsername, newCorreo, newContraseña, newPoin
 }
 
 
+async function editTravelReview(travel_id, travel_review) {
+    const connection = await connect_to_db()
+    //Imprime los datos que se reciben
+
+    try {
+        console.log("adentro del try")
+        const [results] = await connection.query('CALL travel_edit_review(?,?)', [travel_id, travel_review])
+        resultado = results[0][0].affected_rows;
+        console.log("adentro del query")
+        console.log(resultado)
+        if (resultado == 0) {
+            throw new Error("Error al editar usuario")
+        }
+        return [1, resultado]
+    } catch (error) {
+        console.log("Error al editar: ", error.message)
+        return [0, error.message]
+    } finally {
+        connection.end()
+    }
+}
+
+
 
 async function deleteUser(user_id) {
     const connection = await connect_to_db()
@@ -214,5 +237,6 @@ module.exports = {
     getTravel,
     NewReview,
     getReview,
-    getTravelScore
+    getTravelScore,
+    editTravelReview
 }
