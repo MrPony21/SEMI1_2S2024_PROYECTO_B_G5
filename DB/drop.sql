@@ -1,0 +1,31 @@
+-- TABLAS:
+DROP TABLE IF EXISTS Travel_log;
+DROP TABLE IF EXISTS Label;
+DROP TABLE IF EXISTS Review;
+DROP TABLE IF EXISTS User;
+DROP TABLE IF EXISTS Travel;
+
+-- PROCEDIMIENTOS DE User:
+DROP PROCEDURE IF EXISTS user_login;
+DROP PROCEDURE IF EXISTS user_insert;
+DROP PROCEDURE IF EXISTS user_update;
+DROP PROCEDURE IF EXISTS user_delete;
+
+-- PROCEDIMIENTOS DE Travel:
+DROP PROCEDURE IF EXISTS travel_insert;
+DROP PROCEDURE IF EXISTS travel_get_all;
+DROP PROCEDURE IF EXISTS travel_get_score_by_id;
+DROP PROCEDURE IF EXISTS travel_get_travel_by_id;
+
+-- PROCEDIMIENTOS DE Review:
+DROP PROCEDURE IF EXISTS review_insert;
+DROP PROCEDURE IF EXISTS review_get_review_by_travel_id;
+DROP PROCEDURE IF EXISTS review_get_review_by_user_id;
+
+-- PROCEDIMIENTOS DE Label:
+DROP PROCEDURE IF EXISTS label_insert;
+DROP PROCEDURE IF EXISTS label_get_label_by_id;
+
+
+-- TRIGGERS:
+DROP TRIGGER IF EXISTS review_update_trigger;

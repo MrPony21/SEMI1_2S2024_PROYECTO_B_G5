@@ -10,6 +10,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Comments from "../components/comments";
+import Dialog_comment from "../components/dialog_comment";
 
 const Travel = () => {
     const navigate = useNavigate()
@@ -28,7 +29,6 @@ const Travel = () => {
             setUser(user_json)
         } else {
             setUser(null)
-            navigate('/')
         }
 
         //aqui debemos de obtener la informacion del viaje para mostrarla 
@@ -70,7 +70,7 @@ const Travel = () => {
             <div className="title-div">
                 <h1>{travel}</h1>
                 <div className="button-div">
-                    <button >
+                    <button onClick={() => navigate('/reservar')} >
                         <span class="transition"></span>
                         <span class="gradient"></span>
                         <span class="label">Reservar por Q2130</span>
@@ -128,7 +128,7 @@ const Travel = () => {
             <div className="comentarios">
                 <div className="comment-header">
                     <h3>Comentarios</h3>
-                    <button class="button-comment">Comentar</button>
+                    <Dialog_comment></Dialog_comment>
                 </div>
                 <div className="div-comentarios">
                     <Comments></Comments>

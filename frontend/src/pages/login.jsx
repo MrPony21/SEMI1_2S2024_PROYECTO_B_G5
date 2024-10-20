@@ -35,12 +35,21 @@ const Login = () => {
         setDataIncomplete(false)
         console.log(username, password)
 
-        //peticion de login
-        const data = { 
-            name: "Marco", 
-            profile_pic: "https://i.pinimg.com/736x/b8/d6/87/b8d6875b1e58bf34ba1eac2253eea106.jpg", 
-            saldo:"600"
+        let data = ""
+        if(username == "admin" && password== "admin"){
+            data = {
+                name: "admin", 
+                profile_pic: "https://i.pinimg.com/736x/b8/d6/87/b8d6875b1e58bf34ba1eac2253eea106.jpg", 
+                saldo:"600"
+            }
+        }else{
+            data = { 
+                name: "marco", 
+                profile_pic: "https://i.pinimg.com/736x/b8/d6/87/b8d6875b1e58bf34ba1eac2253eea106.jpg", 
+                saldo:"600"
+            }
         }
+
         localStorage.setItem("user", JSON.stringify(data) )
         navigate("/")
 
