@@ -7,6 +7,7 @@ import SizeAvatars from "../components/avatar";
 import AvatarUser from "../components/avatar";
 import { API_GATEWAY, API_BACKEND } from "../config";
 import { Fecha_Actual } from "../date";
+import { useRadioGroup } from "@mui/material";
 
 const Register = () => {
     const navigate = useNavigate();
@@ -61,7 +62,48 @@ const Register = () => {
         }
         setDataIncomplete(false)
 
-        // AQUI haremos 
+
+        //fetch para crear usuario
+         //Crea un json de ejemplo, para cargar esto
+    // {
+    //     "username": "Juan",
+    //     "password": "123",
+    //     "email": hola@gmail.com "
+    // }
+
+        const data_user = {
+            username: username,
+            password: password,
+            email: email
+        }
+
+        try{
+            const res = await fetch(`${API_BACKEND}/user/add`,{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data_user),
+            });
+
+            if (res.status != 200 && res.status != 201){
+                alert("El usuario ya existe")
+                
+            }
+
+            const responseUser = await res.json()
+            console.log(responseUser.message)
+
+        } catch (err) {
+            let error = err
+            console.error("Error al crear el usuario", error.error)
+            console.log("Esto",error.error)
+            return
+        }
+
+
+
+        // AQUI haremos LA subida al S3
         //vamos a quitarle el prefijo de base64
         let base64string = ''
         if (imageAvatar.startsWith('data:image/jpeg;base64,')) {
@@ -104,6 +146,31 @@ const Register = () => {
         }
 
         console.log(url)
+
+        //aqui vamos a hacer el fetch para actualizar la foto de perfil
+        // try{
+        //     const res = await fetch(`${API_BACKEND}/user/add`,{
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //         },
+        //         body: JSON.stringify(data_user),
+        //     });
+
+        //     if (res.status != 200 && res.status != 201){
+        //         alert("El usuario ya existe")
+                
+        //     }
+
+        //     const responseUser = await res.json()
+        //     console.log(responseUser)
+
+        // } catch (err) {
+        //     let error = err
+        //     console.error("Error al crear el usuario", error.error)
+        //     console.log("Esto",error.error)
+        //     return
+        // }
 
 
 
