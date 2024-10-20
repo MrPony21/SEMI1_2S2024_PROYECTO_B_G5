@@ -5,7 +5,8 @@ import Input from "../components/input";
 import Alert from '@mui/material/Alert';
 import SizeAvatars from "../components/avatar";
 import AvatarUser from "../components/avatar";
-
+import { API_GATEWAY, API_BACKEND } from "../config";
+import { Fecha_Actual } from "../date";
 
 const Register = () => {
     const navigate = useNavigate();
@@ -22,11 +23,11 @@ const Register = () => {
 
     const handleInputChange = (event) => {
         const { name, value } = event.target; // Obtener el nombre y el valor del input
-        if( name == "username"){
+        if (name == "username") {
             setUsername(value)
-        }else if ( name == "email"){
+        } else if (name == "email") {
             setEmail(value);
-        }else if( name == "password"){
+        } else if (name == "password") {
             setPassword(value)
         }
     };
@@ -52,21 +53,70 @@ const Register = () => {
 
     //falta terminar el submit
     const handleSubmit = async (e) => {
-            e.preventDefault()
+        e.preventDefault()
 
-            if (!username || !email || !password){
-                setDataIncomplete(true)
-                return;
+        if (!username || !email || !password) {
+            setDataIncomplete(true)
+            return;
+        }
+        setDataIncomplete(false)
+
+        // AQUI haremos 
+        //vamos a quitarle el prefijo de base64
+        let base64string = ''
+        if (imageAvatar.startsWith('data:image/jpeg;base64,')) {
+            // Es un archivo JPG
+            base64string = imageAvatar.replace('data:image/jpeg;base64,', '');
+        } else if (imageAvatar.startsWith('data:image/png;base64,')) {
+            // Es un archivo PNG
+            base64string = imageAvatar.replace('data:image/png;base64,', '');
+        }
+
+        const fecha_key = Fecha_Actual()
+
+        const sendS3 = {
+            photo: base64string,
+            key: `Fotos_Perfil/${username}_${fecha_key}`
+        }
+
+        console.log(sendS3)
+
+        let url;
+        try {
+            const res = await fetch(`${API_GATEWAY}/uploadS3`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(sendS3),
+            });
+
+            if (res.status != 200) {
+                throw new Error(`Error: ${res.status}`);
             }
-            setDataIncomplete(false)
 
-    }
+            const responseS3 = await res.json();
+            const body = JSON.parse(responseS3.body)
+            url = body.url
+        } catch (err) {
+            console.error("Error al subir la imagen:", err);
+            console.log(err)
+        }
+
+        console.log(url)
 
 
-    return (
 
-        <div className="register-container">
-            <form className="form" onSubmit={handleSubmit}>
+    };
+
+
+
+
+
+return (
+
+    <div className="register-container">
+        <form className="form" onSubmit={handleSubmit}>
             <div className="flex-column">
                 <label>Nombre de Usuario </label>
             </div>
@@ -108,7 +158,7 @@ const Register = () => {
             <div className="flex-column">
                 <label>Subir foto de perfil </label>
             </div>
-            <div className="avatar" onClick={handleAvatarClick} style={{cursor: 'pointer'}} >
+            <div className="avatar" onClick={handleAvatarClick} style={{ cursor: 'pointer' }} >
                 <AvatarUser width={120} height={120} src={imageAvatar} />
             </div>
             <input
@@ -121,13 +171,13 @@ const Register = () => {
 
 
             {usernameExists && (
-                 <Alert severity="error">El nombre de usuario ya existe</Alert>
+                <Alert severity="error">El nombre de usuario ya existe</Alert>
             )}
             {emailExists && (
-                 <Alert severity="error">El correo electronico ya esta registrado</Alert>
+                <Alert severity="error">El correo electronico ya esta registrado</Alert>
             )}
             {dataIncomplete && (
-                 <Alert severity="error">Favor de llenar todos los campos</Alert>
+                <Alert severity="error">Favor de llenar todos los campos</Alert>
             )}
 
             <button type="submit" className="button-submit">Registrarse</button>
@@ -139,11 +189,11 @@ const Register = () => {
             </div>
         </form>
 
-        </div>
+    </div>
 
-        
 
-    );
+
+);
 };
 
 
