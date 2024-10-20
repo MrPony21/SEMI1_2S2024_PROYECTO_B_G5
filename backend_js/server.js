@@ -3,6 +3,7 @@ const cors = require('cors')
 const app = express()
 
 app.use(express.json({limit: '50mb'}))
+app.use(cors());
 const userRoute = require('./routes/user') 
 const travelRoute = require('./routes/travel') 
 const reviewRoute = require('./routes/review')
@@ -17,7 +18,7 @@ app.get('/', (req,res) => {
 app.use("/user", userRoute);
 app.use("/travel", travelRoute);
 app.use("/review", reviewRoute);
-app.use(cors());
+
 
 app.listen(4000);
 

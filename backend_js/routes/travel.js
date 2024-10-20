@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
 router.get('/all', async (req, res) => {
     users = await queries.getAllTravels()
     //console.log(users)    
-    res.send(users)
+    res.send(users[0])
 })
 
 

@@ -47,7 +47,7 @@ router.post('/add', async (req, res) => {
     }
 
     //PENDIENTE SUBIR FOTO DE PERFIL
-    res.status(201).json({ message: response })
+    res.status(201).json({ message: response[0][0].user_id})
 })
 
 
