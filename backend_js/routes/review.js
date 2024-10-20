@@ -17,9 +17,9 @@ router.post('/add', async (req, res) => {
 
     console.log("ESTAMOS ENTRANDO")
 
-  
+
     const [addUser, response] = await queries.NewReview(data.description, data.score, data.user, data.travel);
-    
+
     //Crea un json de ejemplo, para cargar esto
     // {
     //     "description": "Muy buen viaje",
@@ -37,16 +37,30 @@ router.post('/add', async (req, res) => {
 
 
     //SE ACTUALIZA EL SCORE DEL VIAJE
-    const [getTravel, response2] = await queries.getReview( data.travel);
+    const [getTravel, response2] = await queries.getReview(data.travel);
+
+    let totalScore = 0;
+    let count = 0;
+
+    response2.forEach(review => {
+        totalScore += review.review_score;
+        count++;
+        
+    });
+    totalScore = totalScore / count;
+
+    const averageScore = totalScore.toFixed(2);
+
+    const [getTravel3, response3] = await queries.editTravelReview(data.travel, averageScore);
 
     console.log(response2)
-    console.log("HJKADFJDKJFAD ", getTravel)
+    console.log("HJKADFJDKJFAD ", averageScore)
     res.status(201).json({ message: response })
 })
 
 //Para obtener los comentarios de un viaje
 router.get('/:travelid', async (req, res) => {
-    let travelid = req.params.travelid; 
+    let travelid = req.params.travelid;
 
     console.log('Obteniendo viaje: ', travelid)
 

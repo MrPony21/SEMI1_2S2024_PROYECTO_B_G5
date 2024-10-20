@@ -74,5 +74,5 @@ CREATE PROCEDURE travel_edit_review(
 
     
     
-DROP PROCEDURE travel_edit_review;
+
     
