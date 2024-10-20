@@ -59,8 +59,14 @@ CALL review_get_review_by_travel_id(1);
 
 -- Procedimiento para obtener las reviews de un usuario por el id del usuario:
 -- parametros: user_id
-CALL review_get_review_by_user_id(1);
+CALL review_get_review_by_user_id5(1);
 
 -- Procedimiento para obtener el score de un viaje por su id:
 -- parametros: travel_id
 CALL travel_get_score_by_id(1);
+
+-- Procedimiento para actualizar el score (AWS) No dejo correr el trigger
+-- IN p_travel_id BIGINT UNSIGNED, IN p_travel_score FLOAT
+CALL travel_edit_review(1, 3.3);
+
+select * from Review;

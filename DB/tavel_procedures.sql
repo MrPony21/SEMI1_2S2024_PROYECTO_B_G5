@@ -55,3 +55,24 @@ CREATE PROCEDURE travel_get_travel_by_id(
 BEGIN
     SELECT * FROM Travel WHERE travel_id = p_travel_id;
 END //
+DELIMITER; 
+
+DELIMITER //
+
+CREATE PROCEDURE travel_edit_review(
+	IN p_travel_id BIGINT UNSIGNED,
+    IN p_travel_review FLOAT
+    )
+    BEGIN 
+    UPDATE Travel
+    SET travel_review = p_travel_review
+    WHERE travel_id = p_travel_id;
+    
+    SELECT 1;
+    END //
+    
+
+    
+    
+DROP PROCEDURE travel_edit_review;
+    

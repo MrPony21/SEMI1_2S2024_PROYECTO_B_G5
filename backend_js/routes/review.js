@@ -15,11 +15,11 @@ router.get('/', (req, res) => {
 router.post('/add', async (req, res) => {
     data = req.body
 
-
+    console.log("ESTAMOS ENTRANDO")
 
   
     const [addUser, response] = await queries.NewReview(data.description, data.score, data.user, data.travel);
-
+    
     //Crea un json de ejemplo, para cargar esto
     // {
     //     "description": "Muy buen viaje",
@@ -34,6 +34,13 @@ router.post('/add', async (req, res) => {
     }
 
     //PENDIENTE SUBIR FOTO DE VIAJE
+
+
+    //SE ACTUALIZA EL SCORE DEL VIAJE
+    const [getTravel, response2] = await queries.getReview( data.travel);
+
+    console.log(response2)
+    console.log("HJKADFJDKJFAD ", getTravel)
     res.status(201).json({ message: response })
 })
 

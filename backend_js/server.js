@@ -17,6 +17,8 @@ app.get('/', (req,res) => {
 app.use("/user", userRoute);
 app.use("/travel", travelRoute);
 app.use("/review", reviewRoute);
+app.use(cors());
 
-app.listen(4000)
+app.listen(4000);
+
 
