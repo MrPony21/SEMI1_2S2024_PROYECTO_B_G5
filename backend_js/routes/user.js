@@ -62,10 +62,10 @@ router.put('/edit', async (req, res) => {
     //Crea un json de ejemplo, para cargar esto
     // {
     //     "user_id": 1,
-    //     "name": "Juan",
-    //     "email": hola@gmail.com"
-    //     "password": "123",
-    //     "points": 0,
+    //     "name": null,
+    //     "email": null
+    //     "password": null,
+    //     "points": null,
     //     "profile_url": "https://www.google.com"
     // }
 
