@@ -64,13 +64,6 @@ const Register = () => {
 
 
         //fetch para crear usuario
-        //Crea un json de ejemplo, para cargar esto
-        // {
-        //     "username": "Juan",
-        //     "password": "123",
-        //     "email": hola@gmail.com "
-        // }
-
         const data_user = {
             username: username,
             password: password,
