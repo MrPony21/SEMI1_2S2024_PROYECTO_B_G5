@@ -51,6 +51,39 @@ router.post('/add', async (req, res) => {
 })
 
 
+router.post('/login', async (req, res) => {
+    data = req.body
+
+
+
+
+    /* console.log(photo_url) */
+    const [addUser, response] = await queries.userLogin(data.username, data.password)
+
+
+    //Crea un json de ejemplo, para cargar esto
+    // {
+    //     "username": "Juan",
+    //     "password": "123",
+    //     "email": hola@gmail.com "
+    // }
+
+    //Aqui se obtiene el id del usuario que se acaba de insertar, para luego obtener el id para insertar la foto de perfil
+    console.log(response);
+
+    // Si addUser regresa 1, significa que se insertó correctamente
+    // Se envia la imagen de perfil a la base de datos
+    // Se hizo asi, para evitar duplicar la imagen en la base :)
+    // Si addUser regresa 0, significa que hubo un error en la inserción (usuario ya existe) 
+    if (addUser == 0) {
+        res.status(500).json({ error: response })
+        return
+    }
+
+    //PENDIENTE SUBIR FOTO DE PERFIL
+    res.status(201).json({ message: response})
+})
+
 
 router.put('/edit', async (req, res) => {
 

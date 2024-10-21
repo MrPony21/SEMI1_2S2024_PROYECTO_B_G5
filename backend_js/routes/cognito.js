@@ -67,6 +67,8 @@ router.post('/signin', (req, res) => {
         Username: username,
         Pool: userPool
     };
+    
+
 
     const cognitoUser = new CognitoUser(userData);
 
@@ -77,6 +79,9 @@ router.post('/signin', (req, res) => {
                 IDToken: result.getIdToken().getJwtToken(),
                 RefreshToken: result.getRefreshToken().getToken()
             });
+            
+            
+            
         },
         onFailure: (err) => {
             return res.status(400).json({ error: err.message || JSON.stringify(err) });
