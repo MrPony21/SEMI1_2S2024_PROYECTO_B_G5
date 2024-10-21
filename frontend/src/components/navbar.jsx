@@ -35,10 +35,10 @@ function NavBar({ user }) {
                 ) : (
                     <>
                         <div className="center-div">
-                            <AvatarUser width={60} height={60} src={user.profile_pic} />
+                            <AvatarUser width={60} height={60} src={user.user_image_link} />
                             <div className="user-info">
-                                <h2>{user.name}</h2>
-                                <p>Saldo: Q {user.saldo} </p>
+                                <h2>{user.user_name}</h2>
+                                <p>Saldo: Q {user.user_credit} </p>
                             </div>
                             <div className="add-funds" onClick={() => navigate("/addFunds")}>
                                 <AddCircleOutlineOutlinedIcon fontSize="medium" color="primary" />

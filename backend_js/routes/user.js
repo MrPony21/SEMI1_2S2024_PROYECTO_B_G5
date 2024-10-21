@@ -73,7 +73,7 @@ router.post('/login', async (req, res) => {
 
     // Si addUser regresa 1, significa que se insertó correctamente
     // Se envia la imagen de perfil a la base de datos
-    // Se hizo asi, para evitar duplicar la imagen en la base :)
+    // Se hizo asi, para evitar duplicar la imagen en la base 🙂
     // Si addUser regresa 0, significa que hubo un error en la inserción (usuario ya existe) 
     if (addUser == 0) {
         res.status(500).json({ error: response })

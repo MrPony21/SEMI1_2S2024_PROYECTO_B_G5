@@ -38,13 +38,13 @@ const Login = () => {
         console.log(username, password)
 
         let data = ""
-        if(username == "admin" && password== "admin"){
+        if (username == "admin" && password == "admin") {
             data = {
-                name: "admin", 
-                profile_pic: "https://i.pinimg.com/736x/b8/d6/87/b8d6875b1e58bf34ba1eac2253eea106.jpg", 
-                saldo:"600"
+                name: "admin",
+                profile_pic: "https://i.pinimg.com/736x/b8/d6/87/b8d6875b1e58bf34ba1eac2253eea106.jpg",
+                saldo: "600"
             }
-        }else{
+        } else {
 
             const data_to_sign = {
                 username: username,
@@ -59,32 +59,56 @@ const Login = () => {
                     },
                     body: JSON.stringify(data_to_sign),
                 });
-    
+
                 if (res.status != 200 && res.status != 201) {
                     alert("Credenciales incorrectas")
                     return
                 }
-    
+
                 const response = await res.json()
                 console.log(response)
-                
-  
+
+
             } catch (err) {
                 let error = err
                 console.error("Error al ingresar el codigo el usuario", error)
                 console.log("Esto", error.error)
                 return
             }
-  
 
-            data = { 
-                name: "marco", 
-                profile_pic: "https://i.pinimg.com/736x/b8/d6/87/b8d6875b1e58bf34ba1eac2253eea106.jpg", 
-                saldo:"600"
+            let user;
+            try {
+                const res = await fetch(`${API_BACKEND}/user/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data_to_sign),
+                });
+
+                if (res.status != 200 && res.status != 201) {
+                    alert("Credenciales incorrectas")
+                    return
+                }
+
+                const response = await res.json()
+                console.log(response.message)
+                user = response.message
+
+
+            } catch (err) {
+                let error = err
+                console.error("Error al ingresar el codigo el usuario", error)
+                console.log("Esto", error.error)
+                return
             }
+
+
+
+            data = user
         }
 
-        localStorage.setItem("user", JSON.stringify(data) )
+        localStorage.setItem("user", JSON.stringify(data))
         navigate("/")
 
     }
@@ -139,7 +163,7 @@ const Login = () => {
                 </div>
             </form>
 
-  
+
 
         </div>
 
