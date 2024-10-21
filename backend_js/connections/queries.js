@@ -163,6 +163,25 @@ async function getTravel(travel_id) {
 
 }
 
+async function userLogin(username, password) {
+    console.log(username, password);
+    const connection = await connect_to_db();
+    try {
+        const [results] = await connection.query('CALL user_login(?,?)', [username, password]);
+        console.log(results[0][0].p_result);
+        if (results.length === 0) {
+            throw new Error("Usuario no encontrado o credenciales incorrectas.");
+        }
+        return [1, results[0][0].p_result];
+    } catch (error) {
+        console.log("Error al intentar iniciar sesión: ", error.message);
+        return [0, error.message];
+    } finally {
+        connection.end();
+    }
+}
+
+
 
 async function NewReview(description, score, user, travel) {
     const connection = await connect_to_db()
@@ -238,5 +257,6 @@ module.exports = {
     NewReview,
     getReview,
     getTravelScore,
-    editTravelReview
+    editTravelReview,
+    userLogin
 }

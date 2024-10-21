@@ -8,7 +8,7 @@ const router = express.Router();
 AWS.config.update({
   accessKeyId: process.env.ACCESSKEY,
   secretAccessKey: process.env.SECRETACCESSKEY,
-  region: process.env.AWS_REGION
+  region: process.env.AWSREGION
 });
 
 // Crear instancia del servicio de localización
@@ -39,15 +39,21 @@ const buscarLugarPorNombre = async (nombreLugar) => {
 };
 
 // Ruta para buscar lugar por nombre (GET)
+// Ruta para buscar lugar por nombre (GET)
 router.get('/buscar-lugar', async (req, res) => {
-  const { nombreLugar } = req.query; // El nombre del lugar se pasa como query parameter
-  try {
-    const coordenadas = await buscarLugarPorNombre(nombreLugar);
-    res.json({ coordenadas });
-  } catch (error) {
-    res.status(500).json({ error });
-  }
-});
+    const { nombre_lugar } = req.query; // Asegúrate de extraer 'nombre_lugar' de los query parameters
+    if (!nombre_lugar) {
+      return res.status(400).json({ error: 'El parámetro nombre_lugar es requerido.' });
+    }
+  
+    try {
+      const coordenadas = await buscarLugarPorNombre(nombre_lugar);
+      res.json({ coordenadas });
+    } catch (error) {
+      res.status(500).json({ error });
+    }
+  });
+  
 
 // Exportar el router
 module.exports = router;
