@@ -75,7 +75,7 @@ const Upload_Travel = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        if (!username || !precio || !axis_x || !axis_y || !description) {
+        if (!username || !precio || !description) {
             setDataIncomplete(true)
             return;
         }
@@ -214,30 +214,7 @@ const Upload_Travel = () => {
                         type="text"
                     />
                 </div>
-                <div className="flex-column">
-                    <label>Coordenada en x </label>
-                </div>
-                <div className="inputForm">
-                    <Input
-                        name="axis-x"
-                        value={axis_x}
-                        placeholder="Ingresa coordenada en x"
-                        onChange={handleInputChange}
-                        type="float"
-                    />
-                </div>
-                <div className="flex-column">
-                    <label>Coordenada en y </label>
-                </div>
-                <div className="inputForm">
-                    <Input
-                        name="axis-y"
-                        value={axis_y}
-                        placeholder="Ingresa coordenada en y"
-                        onChange={handleInputChange}
-                        type="float"
-                    />
-                </div>
+               
                 <div className="flex-column">
                     <label>Subir foto de perfil </label>
                 </div>

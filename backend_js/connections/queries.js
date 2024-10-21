@@ -168,11 +168,12 @@ async function userLogin(username, password) {
     const connection = await connect_to_db();
     try {
         const [results] = await connection.query('CALL user_login(?,?)', [username, password]);
-        console.log(results[0][0].p_result);
+        console.log(results[0][0]);
+        resultado = results[0][0]
         if (results.length === 0) {
             throw new Error("Usuario no encontrado o credenciales incorrectas.");
         }
-        return [1, results[0][0].p_result];
+        return [1, resultado];
     } catch (error) {
         console.log("Error al intentar iniciar sesión: ", error.message);
         return [0, error.message];

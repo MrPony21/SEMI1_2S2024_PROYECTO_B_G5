@@ -24,6 +24,8 @@ const Travel = () => {
     const [idioma, setidioma] = React.useState('');
     const [cost, setCost] = useState(0)
     const [audioSrc, setAudioSrc] = useState(false)
+    const [axisx, setAxisx] = useState(0)
+    const [axisy, setAxisy] = useState(0)
 
 
     useEffect(() => {
@@ -40,6 +42,7 @@ const Travel = () => {
 
         const id_travel = localStorage.getItem("travel_id")
         console.log(id_travel)
+        let name;
         //aqui vamos a obtener la informacion del viaje
         const GetTravel = async () => {
             try {
@@ -58,6 +61,7 @@ const Travel = () => {
                 console.log(response.message)
                 let viaje = response.message
                 setTravel(viaje.travel_name)
+                name = viaje.travel_name
                 setFondo(viaje.travel_image_link)
                 setDescription(viaje.travel_description)
                 setShowdescription(viaje.travel_description)
@@ -69,25 +73,64 @@ const Travel = () => {
                 console.error("Error al obtener el travel", error)
                 return
             }
+
+
+            //aqui el fetch para las coordenadas
+            console.log(name)
+            let x;
+            let y;
+            try {
+                const res = await fetch(`${API_BACKEND}/location/buscar-lugar?nombre_lugar=${name}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (res.status != 200 && res.status != 201) {
+                    alert("Error al obtener las coordenadas")
+                }
+
+                const response = await res.json()
+                console.log(response.coordenadas)
+                setAxisx(response.coordenadas[0])
+                setAxisy(response.coordenadas[1])
+                x = response.coordenadas[0]
+                y = response.coordenadas[1]
+
+
+            } catch (err) {
+                let error = err
+                console.error("Error al obtener el travel", error)
+                return
+            }
+
+            console.log(x)
+            console.log(y)
+
+            const map = new maplibregl.Map({
+                container: mapContainer.current,
+                style: 'https://demotiles.maplibre.org/style.json', // URL de estilo del mapa
+                center:  [x, y], // Coordenadas del centro del mapa
+                zoom: 5, // Nivel de zoom inicial
+            });
+    
+            new maplibregl.Marker()
+                .setLngLat( [x, y])
+                .addTo(map);
+    
+            return () => {
+                map.remove(); // Limpia el mapa cuando el componente se desmonte
+            };
+        
+
         }
 
         GetTravel()
 
 
-        const map = new maplibregl.Map({
-            container: mapContainer.current,
-            style: 'https://demotiles.maplibre.org/style.json', // URL de estilo del mapa
-            center: [-88.59075, 15.69329], // Coordenadas del centro del mapa
-            zoom: 5, // Nivel de zoom inicial
-        });
 
-        new maplibregl.Marker()
-            .setLngLat( [-88.59075, 15.69329])
-            .addTo(map);
-
-        return () => {
-            map.remove(); // Limpia el mapa cuando el componente se desmonte
-        };
+    
 
 
 
