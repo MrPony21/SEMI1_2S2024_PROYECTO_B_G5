@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./login.css"
 import Input from "../components/input";
 import Alert from '@mui/material/Alert';
+import verificationDialog from "./verification";
 
 
 const Login = () => {
@@ -10,6 +11,7 @@ const Login = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [imageAvatar, setImageAvatar] = useState(null)
+    const [showVerification, setShowVerification] = useState(false)
 
     //alerts 
     const [dataIncomplete, setDataIncomplete] = useState(false)
@@ -105,6 +107,10 @@ const Login = () => {
                 </div>
             </form>
 
+                {showVerification && (
+                    <verificationDialog/>
+
+                )}
 
         </div>
 

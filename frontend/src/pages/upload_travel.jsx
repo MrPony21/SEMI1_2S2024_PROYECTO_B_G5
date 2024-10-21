@@ -7,6 +7,8 @@ import SizeAvatars from "../components/avatar";
 import AvatarUser from "../components/avatar";
 import TextField from '@mui/material/TextField';
 import "./upload_travel.css"
+import { Fecha_Actual } from "../date";
+import { API_GATEWAY, API_BACKEND } from "../config";
 
 const Upload_Travel = () => {
     const navigate = useNavigate();
@@ -52,8 +54,8 @@ const Upload_Travel = () => {
 
     //aqui pondremos los submit para subir el avatar
     const handleAvatarClick = () => {
-       document.getElementById("avatarInput").click();
-  
+        document.getElementById("avatarInput").click();
+
     }
 
 
@@ -79,16 +81,92 @@ const Upload_Travel = () => {
         }
         setDataIncomplete(false)
 
-        const data = {
-            username: username,
-            precio: precio,
-            axis_x: axis_x,
-            axis_y: axis_y,
-            description: description,
-            image: imageTravel
+        //primero se sube a S3
+
+        //vamos a quitarle el prefijo de base64
+        let base64string = ''
+        if (imageTravel.startsWith('data:image/jpeg;base64,')) {
+            // Es un archivo JPG
+            base64string = imageTravel.replace('data:image/jpeg;base64,', '');
+        } else if (imageTravel.startsWith('data:image/png;base64,')) {
+            // Es un archivo PNG
+            base64string = imageTravel.replace('data:image/png;base64,', '');
         }
 
-        console.log(data)
+        const fecha_key = Fecha_Actual()
+
+        const sendS3 = {
+            photo: base64string,
+            key: `Travel/${username}_${fecha_key}`
+        }
+
+        console.log(sendS3)
+
+        let url;
+        try {
+            const res = await fetch(`${API_GATEWAY}/uploadS3`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(sendS3),
+            });
+
+            if (res.status != 200) {
+                throw new Error(`Error: ${res.status}`);
+            }
+
+            const responseS3 = await res.json();
+            const body = JSON.parse(responseS3.body)
+            url = body.url
+        } catch (err) {
+            console.error("Error al subir la imagen:", err);
+            console.log(err)
+        }
+
+        console.log(url)
+
+
+
+        //AQUI ENVIAMOS LA PETICION DE CREACION AL BACKEND
+        //fatla agregar las coordenadas
+        const data = 
+            {
+                "name": username,
+                "description": description,
+                "cost": precio,
+                "image_link": url
+            }
+        
+
+
+
+        try {
+            const res = await fetch(`${API_BACKEND}/travel/add`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+
+            if (res.status != 200 && res.status != 201) {
+                alert("No se ha subido correctamente el travel")
+                return
+            }
+
+            const response = await res.json()
+            console.log(response.message)
+
+        } catch (err) {
+            let error = err
+            console.error("Error al crear el usuario", error.error)
+            console.log("Esto", error.error)
+            return
+        }
+
+        alert("Se ha subido correctamente el nuevo destino")
+        navigate(0)
 
     }
 
@@ -187,7 +265,7 @@ const Upload_Travel = () => {
 
                 <button type="submit" className="button-submit">Subir destino</button>
                 <p className="p">
-                  <span className="span" onClick={() => navigate('/')}>Regresar</span>
+                    <span className="span" onClick={() => navigate('/')}>Regresar</span>
                 </p>
                 <div className="flex-row">
 

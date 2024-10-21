@@ -144,7 +144,7 @@ const Register = () => {
 
         const data_edit =
         {
-            "user_id": user_id,
+            "user_id": id_user,
             "name": null,
             "email": null,
             "password": null,
@@ -155,7 +155,7 @@ const Register = () => {
         //aqui vamos a hacer el fetch para actualizar la foto de perfil
         try {
             const res = await fetch(`${API_BACKEND}/user/edit`, {
-                method: 'POST',
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -164,10 +164,11 @@ const Register = () => {
 
             if (res.status != 200 && res.status != 201) {
                 alert("Error al hacer el update de la foto")
+            
             }
 
             const responseUpdate = await res.json()
-            console.log(responseUpdate)
+            console.log(responseUpdate.message)
 
         } catch (err) {
             let error = err
@@ -176,7 +177,7 @@ const Register = () => {
             return
         }
 
-
+        
 
     };
 

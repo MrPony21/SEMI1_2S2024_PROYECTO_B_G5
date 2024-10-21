@@ -11,14 +11,19 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Comments from "../components/comments";
 import Dialog_comment from "../components/dialog_comment";
+import { API_BACKEND, API_GATEWAY } from "../config";
 
 const Travel = () => {
     const navigate = useNavigate()
     const [user, setUser] = useState(null)
     const [travel, setTravel] = useState("")
     const [fondo, setFondo] = useState("")
+    const [description, setDescription] = useState("")
+    const [showDescription, setShowdescription] = useState("")
     const mapContainer = useRef(null);
     const [idioma, setidioma] = React.useState('');
+    const [cost, setCost] = useState(0)
+    const [audioSrc, setAudioSrc] = useState(false)
 
 
     useEffect(() => {
@@ -31,10 +36,43 @@ const Travel = () => {
             setUser(null)
         }
 
-        //aqui debemos de obtener la informacion del viaje para mostrarla 
-        setTravel(localStorage.getItem("travel"))
-        setFondo(localStorage.getItem("travel_imagen"))
-        console.log(fondo)
+
+
+        const id_travel = localStorage.getItem("travel_id")
+        console.log(id_travel)
+        //aqui vamos a obtener la informacion del viaje
+        const GetTravel = async () => {
+            try {
+                const res = await fetch(`${API_BACKEND}/travel/${id_travel}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (res.status != 200 && res.status != 201) {
+                    alert("Error al obtener el viaje")
+                }
+
+                const response = await res.json()
+                console.log(response.message)
+                let viaje = response.message
+                setTravel(viaje.travel_name)
+                setFondo(viaje.travel_image_link)
+                setDescription(viaje.travel_description)
+                setShowdescription(viaje.travel_description)
+                setCost(viaje.travel_cost)
+
+
+            } catch (err) {
+                let error = err
+                console.error("Error al obtener el travel", error)
+                return
+            }
+        }
+
+        GetTravel()
+
 
         const map = new maplibregl.Map({
             container: mapContainer.current,
@@ -51,13 +89,84 @@ const Travel = () => {
             map.remove(); // Limpia el mapa cuando el componente se desmonte
         };
 
+
+
     }, [])
 
 
-    const traducir = () => {
+    const traducir = async () => {
         console.log(idioma)
 
+        if (idioma == "es") {
+            setShowdescription(description)
+        }
+
+        const sendTraducir = {
+
+            text: description,
+            lang: idioma
+
+        }
+        console.log(sendTraducir)
+
+        try {
+            const res = await fetch(`${API_GATEWAY}/traducir`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(sendTraducir),
+            });
+
+            if (res.status != 200) {
+                throw new Error(`Error: ${res.status}`);
+            }
+
+            const responseTr = await res.json();
+            const body = responseTr
+            console.log(body.new_text)
+            setShowdescription(body.new_text)
+
+        } catch (err) {
+            console.error("Error al subir la imagen:", err);
+            console.log(err)
+        }
+
     }
+
+    const handleEscuchar = async () => {
+
+        const sendEscuchar = {
+            text: showDescription
+        }
+
+        try {
+            const res = await fetch(`${API_GATEWAY}/escuchar`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(sendEscuchar),
+            });
+
+            if (res.status != 200) {
+                throw new Error(`Error: ${res.status}`);
+            }
+
+            const response = await res.json();
+            const body = JSON.parse(response.body)
+            const audiobase64 = body.audio
+            const audioURL = `data:audio/mp3;base64,${audiobase64}`;
+            console.log("Estoy aqui:", audioURL)
+            setAudioSrc(audioURL)
+
+        } catch (err) {
+            console.error("Error al ejecutar polly :", err);
+            console.log(err)
+        }
+
+    }
+
 
     const handleChange = (event) => {
         setidioma(event.target.value);
@@ -73,7 +182,7 @@ const Travel = () => {
                     <button onClick={() => navigate('/reservar')} >
                         <span class="transition"></span>
                         <span class="gradient"></span>
-                        <span class="label">Reservar por Q2130</span>
+                        <span class="label">Reservar por Q{cost}</span>
                     </button>
                 </div>
             </div>
@@ -96,7 +205,7 @@ const Travel = () => {
                             </span>
                         </header>
                         <section class="modal-container-body rtf">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Unum nescio, quo modo possit, si luxuriosus sit, finitas cupiditates habere. Hoc est non modo cor non habere, sed ne palatum quidem. Sic, et quidem diligentius saepiusque ista loquemur inter nos idiomamusque communiter. Paulum, cum regem Persem captum adduceret, eodem flumine invectio? Quid igitur dubitamus in tota eius natura quaerere quid sit effectum? Duo Reges: constructio interrete.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Unum nescio, quo modo possit, si luxuriosus sit, finitas cupiditates habere. Hoc est non modo cor non habere, sed ne palatum quidem. Sic, et quidem diligentius saepiusque ista loquemur inter nos idiomamusque communiter. Paulum, cum regem Persem captum adduceret, eodem flumine invectio? Quid igitur dubitamus in tota eius natura quaerere quid sit effectum? Duo Reges: constructio interrete</p>
+                            <p>{showDescription}</p>
                         </section>
                         <footer class="modal-container-footer">
                             <FormControl fullWidth>
@@ -108,19 +217,28 @@ const Travel = () => {
                                     label="idioma"
                                     onChange={handleChange}
                                 >
-                                    <MenuItem value="spanish">Español</MenuItem>
-                                    <MenuItem value="english">Ingles</MenuItem>
-                                    <MenuItem value="japones">Japones</MenuItem>
+                                    <MenuItem value="es">Español</MenuItem>
+                                    <MenuItem value="en">Ingles</MenuItem>
+                                    <MenuItem value="ja">Japones</MenuItem>
                                 </Select>
                             </FormControl>
                             <button class="button is-primary" onClick={traducir}>Traducir</button>
-                            <button class="button is-primary">Oir</button>
+                            <button class="button is-primary" onClick={handleEscuchar}>Escuchar</button>
+                            
 
                         </footer>
+                        {audioSrc && (
+                            <div>
+                                <audio controls>
+                                    <source src={audioSrc} type="audio/mp3" />
+                                    Tu navegador no soporta la reproducción de audio.
+                                </audio>
+                            </div>
+                        )}
                     </article>
                 </div>
                 <div ref={mapContainer} className="map-container">
-                    
+
                 </div>
 
             </div>
@@ -136,6 +254,7 @@ const Travel = () => {
                     <Comments></Comments>
                 </div>
             </div>
+
 
         </>
     )
