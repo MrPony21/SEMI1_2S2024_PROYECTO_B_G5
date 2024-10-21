@@ -7,6 +7,8 @@ app.use(cors());
 const userRoute = require('./routes/user') 
 const travelRoute = require('./routes/travel') 
 const reviewRoute = require('./routes/review')
+const cognitoRoute = require('./routes/cognito')
+const locationRoute = require('./routes/location')
 
 
 app.get('/', (req,res) => {
@@ -18,6 +20,8 @@ app.get('/', (req,res) => {
 app.use("/user", userRoute);
 app.use("/travel", travelRoute);
 app.use("/review", reviewRoute);
+app.use("/cognito", cognitoRoute);
+app.use("/location", locationRoute);
 
 
 app.listen(4000);

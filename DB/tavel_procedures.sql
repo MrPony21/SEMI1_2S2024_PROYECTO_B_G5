@@ -4,7 +4,9 @@ CREATE PROCEDURE travel_insert(
     IN p_travel_name VARCHAR(255),
     IN p_travel_description TEXT,
     IN p_travel_cost INT,
-    IN p_travel_image_link VARCHAR(500)
+    IN p_travel_image_link VARCHAR(500),
+    IN p_travel_axis_x FLOAT,
+    IN p_travel_axis_y FLOAT
 )
 
 BEGIN 
@@ -12,13 +14,17 @@ BEGIN
         travel_name,
         travel_description,
         travel_cost,
-        travel_image_link
+        travel_image_link,
+		travel_axis_x,
+        travel_axis_y
     )
     VALUES (
         p_travel_name,
         p_travel_description,
         p_travel_cost,
-        p_travel_image_link
+        p_travel_image_link,
+		p_travel_axis_x,
+		p_travel_axis_y 
     );
     SELECT 1;
 END //

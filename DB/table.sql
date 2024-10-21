@@ -7,6 +7,8 @@
         user_image_link VARCHAR(500)
 
     );
+    
+
 
     CREATE TABLE IF NOT EXISTS Travel(
 

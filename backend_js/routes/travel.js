@@ -20,7 +20,7 @@ router.get('/all', async (req, res) => {
 
 router.post('/add', async (req, res) => {
     data = req.body
-
+    
 
 
     // 'Tecpan', 'Viaje a tecpan con amigos', 100, 'https://www.google.com
