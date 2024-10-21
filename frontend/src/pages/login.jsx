@@ -4,6 +4,7 @@ import "./login.css"
 import Input from "../components/input";
 import Alert from '@mui/material/Alert';
 import verificationDialog from "./verification";
+import { API_GATEWAY, API_BACKEND } from "../config";
 
 
 const Login = () => {
@@ -11,7 +12,6 @@ const Login = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [imageAvatar, setImageAvatar] = useState(null)
-    const [showVerification, setShowVerification] = useState(false)
 
     //alerts 
     const [dataIncomplete, setDataIncomplete] = useState(false)
@@ -45,6 +45,38 @@ const Login = () => {
                 saldo:"600"
             }
         }else{
+
+            const data_to_sign = {
+                username: username,
+                password: password
+            }
+
+            try {
+                const res = await fetch(`${API_BACKEND}/cognito/signin`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data_to_sign),
+                });
+    
+                if (res.status != 200 && res.status != 201) {
+                    alert("Credenciales incorrectas")
+                    return
+                }
+    
+                const response = await res.json()
+                console.log(response)
+                
+  
+            } catch (err) {
+                let error = err
+                console.error("Error al ingresar el codigo el usuario", error)
+                console.log("Esto", error.error)
+                return
+            }
+  
+
             data = { 
                 name: "marco", 
                 profile_pic: "https://i.pinimg.com/736x/b8/d6/87/b8d6875b1e58bf34ba1eac2253eea106.jpg", 
@@ -107,10 +139,7 @@ const Login = () => {
                 </div>
             </form>
 
-                {showVerification && (
-                    <verificationDialog/>
-
-                )}
+  
 
         </div>
 

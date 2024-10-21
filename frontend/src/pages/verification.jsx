@@ -6,13 +6,12 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { useNavigate } from "react-router-dom";
+import { API_GATEWAY, API_BACKEND } from "../config";
 
-export default function verificationDialog() {
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+export default function VerificationDialog( email ) {
+  const [open, setOpen] = React.useState(true);
+  const navigate = useNavigate()
 
   const handleClose = () => {
     setOpen(false);
@@ -20,45 +19,74 @@ export default function verificationDialog() {
 
   return (
     <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open form dialog
-      </Button>
       <Dialog
         open={open}
         onClose={handleClose}
         PaperProps={{
           component: 'form',
-          onSubmit: (event) => {
+          onSubmit: async (event) => {
             event.preventDefault();
             const formData = new FormData(event.currentTarget);
             const formJson = Object.fromEntries(formData.entries());
-            const email = formJson.email;
-            console.log(email);
+            const codigo = formJson.codigo;
+            console.log(codigo);
+    
+            
+            //fetch para enviar el codigo
+            const data = {
+              username: email.email,
+              code: codigo
+            }
+            console.log(data)
+            try {
+              const res = await fetch(`${API_BACKEND}/cognito/confirm`, {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(data),
+              });
+  
+              if (res.status != 200 && res.status != 201) {
+                  alert("El codigo ingresado es incorrecto")
+                  return
+              }
+  
+              const responseUpdate = await res.json()
+              console.log(responseUpdate.message)
+              alert("Codigo ingresado correctamente")
+              navigate('/login')
+
+          } catch (err) {
+              let error = err
+              console.error("Error al ingresar el codigo el usuario", error)
+              console.log("Esto", error.error)
+              return
+          }
+
+
+
+
             handleClose();
           },
         }}
       >
-        <DialogTitle>Subscribe</DialogTitle>
+        <DialogTitle>Ingresa codigo de verificacion</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            To subscribe to this website, please enter your email address here. We
-            will send updates occasionally.
-          </DialogContentText>
+
           <TextField
             autoFocus
             required
             margin="dense"
             id="name"
-            name="email"
-            label="Email Address"
-            type="email"
+            name="codigo"
+            type="text"
             fullWidth
             variant="standard"
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit">Subscribe</Button>
+          <Button type="">Confirmar</Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>
