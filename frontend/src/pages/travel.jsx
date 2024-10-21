@@ -77,12 +77,12 @@ const Travel = () => {
         const map = new maplibregl.Map({
             container: mapContainer.current,
             style: 'https://demotiles.maplibre.org/style.json', // URL de estilo del mapa
-            center: [-89.623611, 17.221944,], // Coordenadas del centro del mapa
+            center: [-88.59075, 15.69329], // Coordenadas del centro del mapa
             zoom: 5, // Nivel de zoom inicial
         });
 
         new maplibregl.Marker()
-            .setLngLat([-89.623611, 17.221944])
+            .setLngLat( [-88.59075, 15.69329])
             .addTo(map);
 
         return () => {

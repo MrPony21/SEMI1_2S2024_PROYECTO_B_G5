@@ -8,6 +8,8 @@ import AvatarUser from "../components/avatar";
 import { API_GATEWAY, API_BACKEND } from "../config";
 import { Fecha_Actual } from "../date";
 import { useRadioGroup } from "@mui/material";
+import VerificationDialog from "./verification";
+
 
 const Register = () => {
     const navigate = useNavigate();
@@ -15,6 +17,7 @@ const Register = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [imageAvatar, setImageAvatar] = useState(null)
+    const [showVerification, setShowVerification] = useState(false)
 
     //alerts 
     //falta por configurarlos
@@ -82,7 +85,7 @@ const Register = () => {
 
             if (res.status != 200 && res.status != 201) {
                 alert("El usuario ya existe")
-
+                return
             }
 
             const responseUser = await res.json()
@@ -178,6 +181,39 @@ const Register = () => {
         }
 
         
+        //hacemos el fetch para cognito 
+
+        const data_cognito = {
+            email: email,
+            password: password,
+        }
+
+        try {
+            const res = await fetch(`${API_BACKEND}/cognito/signup`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data_cognito),
+            });
+
+            if (res.status != 200 && res.status != 201) {
+                alert("Error al crear el usuario en cognito")
+            
+            }
+
+            const responseUpdate = await res.json()
+            console.log(responseUpdate.message)
+            setShowVerification(true)
+
+        } catch (err) {
+            let error = err
+            console.error("Error al crear el usuario", error.error)
+            console.log("Esto", error.error)
+            return
+        }
+
+        
 
     };
 
@@ -260,6 +296,10 @@ const Register = () => {
 
                 </div>
             </form>
+            {showVerification && (
+                <VerificationDialog email={email}/>
+            )}
+            
 
         </div>
 
