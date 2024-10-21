@@ -1,0 +1,195 @@
+/* From Uiverse.io by gharsh11032000 */
+.card {
+  position: relative;
+  width: 400px;
+  height: 250px;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  perspective: 1000px;
+  box-shadow: 0 0 0 5px #ffffff80;
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card img {
+  width: 100%;
+  fill: #333;
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
+}
+
+.card__content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #f2f2f2;
+  transform: rotateX(-90deg);
+  transform-origin: bottom;
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card:hover .card__content {
+  transform: rotateX(0deg);
+}
+
+.card__title {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
+  font-weight: 700;
+}
+
+
+.card__description {
+  margin: 10px 0 0;
+  font-size: 14px;
+  color: #777;
+  line-height: 1.4;
+}
+
+.card__content p {
+    
+  display: -webkit-box;
+  -webkit-line-clamp: 5; /* Número máximo de líneas a mostrar */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  
+}
+
+.div-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Esto hace que los elementos dentro del div se distribuyan */
+  margin-top: 15px;
+  margin-bottom: 15px;
+  width: 100%; /* Asegura que el div ocupe todo el ancho disponible */
+}
+
+.div-rate-price{
+  display: flex;
+  padding-left: 15px;
+
+}
+
+.div-rate-price .star-rate {
+    color: orange;
+    font-size: 30px;
+    margin-top: 15px;
+    padding-right: 4px;
+  }
+
+  .div-rate-price .p-rate{
+    color: #1f2937;
+    font-size: 18px;
+    font-weight: 500;
+    padding-right: 3px;
+  }
+
+  .div-price .price {
+    color: #1f2937;
+  }
+
+
+.div-button button {
+  margin-left: auto; 
+  font-size: 14px;
+  padding: 1rem 2.4em;
+  font-weight: 500;
+  background: #1f2937;
+  color: white;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.6em;
+  cursor: pointer;
+}
+
+.gradient {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  border-radius: 0.6em;
+  margin-top: -0.25em;
+  background-image: linear-gradient(rgba(0, 0, 0, 0),
+      rgba(0, 0, 0, 0),
+      rgba(0, 0, 0, 0.3));
+}
+
+.label {
+  position: relative;
+  top: -1px;
+}
+
+.transition {
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  transition-duration: 500ms;
+  background-color: rgba(16, 185, 129, 0.6);
+  border-radius: 9999px;
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+button:hover .transition {
+  width: 14em;
+  height: 14em;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+
+@media (max-width: 768px) {
+
+  .card {
+    width: 300px;
+    height: 200px;
+  }
+
+
+  .card__content p {
+    
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Número máximo de líneas a mostrar */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  
+    
+  }
+
+  .div-button button {
+    margin-left: auto; 
+    font-size: 14px;
+    padding: 0.8rem 1.5em;
+    font-weight: 500;
+    background: #1f2937;
+    color: white;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.6em;
+    cursor: pointer;
+  }
+
+
+}
